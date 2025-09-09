@@ -66,10 +66,19 @@ export class ProdutosService {
     return produto[0];
   }
 
-  async update(CodProd: number, DescrProd: string): Promise<void> {
+  async update(
+    CodProd: number,
+    updateData: { CodProd?: number; DescrProd?: string },
+  ): Promise<void> {
+    const { CodProd: newCodProd, DescrProd } = updateData;
+
+    // Se não forneceu novos dados, mantém os atuais
+    const finalCodProd = newCodProd || CodProd;
+    const finalDescrProd = DescrProd || '';
+
     await this.dataSource.query(
       `EXEC SpGrProduto @CodProd = @0, @DescrProd = @1`,
-      [CodProd, DescrProd],
+      [finalCodProd, finalDescrProd],
     );
   }
 

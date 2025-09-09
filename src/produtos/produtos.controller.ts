@@ -42,9 +42,9 @@ export class ProdutosController {
   @Put(':CodProd')
   async update(
     @Param('CodProd', ParseIntPipe) CodProd: number,
-    @Body() body: { DescrProd: string },
+    @Body() body: { CodProd?: number; DescrProd?: string },
   ) {
-    await this.produtosService.update(CodProd, body.DescrProd);
+    await this.produtosService.update(CodProd, body);
     return { message: 'Produto atualizado com sucesso' };
   }
 
